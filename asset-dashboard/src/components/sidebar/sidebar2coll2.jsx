@@ -154,7 +154,10 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           <ListItem disablePadding sx={{ display: "block" }}>
-            <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+            <Link
+              to="/home"
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -182,7 +185,7 @@ export default function MiniDrawer() {
 
           <ListItem disablePadding sx={{ display: "block" }}>
             <Link
-              to="/assetList"
+              to="/home/assetList"
               style={{ color: "inherit", textDecoration: "none" }}
             >
               <ListItemButton

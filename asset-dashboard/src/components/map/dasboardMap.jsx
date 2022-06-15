@@ -6,7 +6,7 @@ import LocationMarker from "../locationMarker/locationMarker";
 import "./map.scss";
 import CircularColor from "../loading-spinner/LoadingSpinner";
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useParams } from "react";
 
 const mapContainerStyle = {
   width: "500px",
@@ -20,7 +20,7 @@ const center = {
 
 //TODO: Add if check foe device id / client id
 
-const MapsComponentDash = () => {
+const MapsComponentDash = (props) => {
   const [AllAsset, setAllAsset] = useState([]);
   const [Loading, setLoading] = useState(false);
   // const componentMounted = useRef(true); // (3) component is mounted
@@ -32,7 +32,8 @@ const MapsComponentDash = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          "https://ehkwpzkqme.execute-api.ap-south-1.amazonaws.com/prod/allassets "
+          // `https://x6fxeu21qb.execute-api.ap-south-1.amazonaws.com/test/clientassets?ClientID=${props.clientID}`
+          "https://x6fxeu21qb.execute-api.ap-south-1.amazonaws.com/test/clientassets?ClientID=1"
         );
 
         const AllAsset = await response.data;

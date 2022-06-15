@@ -6,11 +6,14 @@ import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions, Link } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { CardHeader } from "@material-ui/core";
+import { useParams } from "react-router-dom";
+
+import { Link as RouterLink } from "react-router-dom";
 
 const NoteCard = ({ note }) => {
   return (
     <Card sx={{ bgColor: "#375f5f" }}>
-      <CardActionArea>
+      <CardActionArea component={RouterLink} to={`/${note.ClientID}`}>
         <CardHeader title="Client's Details" />
         <CardContent>
           <Typography color="inherit" gutterBottom variant="h6" component="div">
@@ -20,7 +23,6 @@ const NoteCard = ({ note }) => {
             Client ID : <span>{note.ClientID}</span>
           </Typography>
         </CardContent>
-        <Link></Link>
       </CardActionArea>
     </Card>
   );

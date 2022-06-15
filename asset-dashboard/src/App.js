@@ -12,19 +12,21 @@ function App() {
     <div className="app">
       <BrowserRouter>
         <Routes>
-          <Route path="/">
-            <Route index element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="assetList">
-              <Route index element={<AssetList />} />
-              <Route path=":AssetID" element={<Single />} />
-              {/* this is where we route for page */}
-              <Route path="new" element={<New title="Add New User" />} />
-            </Route>
-            <Route path="products">
-              <Route index element={<AssetList />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="new" element={<New title="Add New Product" />} />
+          <Route path="/" component={<LandingPage />}>
+            <Route path="home">
+              <Route index element={<Home />} />
+              <Route path="login" element={<Login />} />
+              <Route path="assetList">
+                <Route index element={<AssetList />} />
+                <Route path=":AssetID" element={<Single />} />
+                {/* this is where we route for page */}
+                <Route path="new" element={<New title="Add New User" />} />
+              </Route>
+              <Route path="products">
+                <Route index element={<AssetList />} />
+                <Route path=":productId" element={<Single />} />
+                <Route path="new" element={<New title="Add New Product" />} />
+              </Route>
             </Route>
           </Route>
         </Routes>

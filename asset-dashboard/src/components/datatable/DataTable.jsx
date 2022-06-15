@@ -1,5 +1,7 @@
 import "./datatable.scss";
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
 import axios from "axios";
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
@@ -28,9 +30,9 @@ const DataTable = () => {
     async function getAllAssets() {
       setisLoading(true);
       const Assets = await axios.get(
-        `https://x6fxeu21qb.execute-api.ap-south-1.amazonaws.com/test/clientassets?ClientID=${1}`
+        // `https://x6fxeu21qb.execute-api.ap-south-1.amazonaws.com/test/clientassets?ClientID=${clientID}`
+        "https://x6fxeu21qb.execute-api.ap-south-1.amazonaws.com/test/clientassets?ClientID=1"
       );
-      // console.log(Assets.data.assets);
       setAssets(Assets.data);
       setisLoading(false);
     }
@@ -62,7 +64,7 @@ const DataTable = () => {
           <div className="cellAction">
             <Link
               // How to access every single member from this list  ?
-              to={`/assetList/${params.row.AssetID}`}
+              to={`/home/assetList/${params.row.AssetID}`}
               style={{ textDecoration: "none" }}
             >
               <div className="viewButton">View</div>
@@ -91,7 +93,7 @@ const DataTable = () => {
     <div className="datatable">
       <div className="datatableTitle">
         Asset List
-        <Link to="/assetList/new" className="link">
+        <Link to="/home/assetList/new" className="link">
           Add New
         </Link>
       </div>

@@ -3,24 +3,14 @@ import "./single.scss";
 
 import React from "react";
 import StartEndMap from "../../components/map/StartEndMap";
-import MapsComponent from "../../components/map/Map";
 import CircularProgress from "@mui/material/CircularProgress";
+import MapHistory from "../../components/map/historyMap";
 import MiniDrawer from "../../components/sidebar/sidebar2coll2";
-import {
-  Typography,
-  Box,
-  makeStyles,
-  Grid,
-  TextField,
-  Button,
-} from "@material-ui/core";
+import { Box } from "@material-ui/core";
 
 import { useParams } from "react-router-dom";
 
-import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
-
 import axios from "axios";
-import { useTheme } from "@emotion/react";
 
 import { LiveTracking, LiveView } from "../../components/map/liveLocation";
 const Single = () => {
@@ -80,41 +70,9 @@ const Single = () => {
   };
 
   //API call for location history info
-  console.log(deviceId);
-  const [addBluePath, setaddBluePath] = useState([]);
-  const [LoadingBluePath, setLoadingBluePath] = useState(false);
-  const componentMounted = useRef(true); // (3) component is mounted
-
-  useEffect(() => {
-    async function getBluePath() {
-      try {
-        setLoadingBluePath(true);
-        const response = await axios.get(
-          `https://ehkwpzkqme.execute-api.ap-south-1.amazonaws.com/prod/trackhistory?deviceSerialNumber=${deviceId}`
-        );
-
-        setaddBluePath(response.data.path);
-        //data.path is necessary
-        setLoadingBluePath(false);
-      } catch (error) {
-        console.log("ERROR 2");
-      }
-    }
-    getBluePath();
-  }, [deviceId]);
 
   const onLoad = (marker) => {
     // console.log("marker: ", marker);
-  };
-
-  const center = {
-    lat: 27.1753738514716,
-    lng: 78.04209928206996,
-  };
-
-  const mapContainerStyle = {
-    width: "1000px",
-    height: "400px",
   };
 
   const clientID = deviceId;
@@ -169,48 +127,14 @@ const Single = () => {
           {/* //TODO: extract to component */}
           <h1 className="title">Location History</h1>
           <div className="map">
-            {LoadingBluePath ? (
-              <div className="loader">
-                <Box sx={{ display: "flex" }}>
-                  <CircularProgress color="secondary" />
-                </Box>
-              </div>
-            ) : (
-              <LoadScript googleMapsApiKey="AIzaSyCqnsYyCrtslXT09ZGHvzQPu6f2biBEFR4">
-                <GoogleMap
-                  id="marker-example"
-                  mapContainerStyle={mapContainerStyle}
-                  zoom={5}
-                  center={center}
-                >
-                  {addBluePath.map((marker, i) => (
-                    <Marker
-                      key={i}
-                      position={{
-                        lat: parseFloat(marker.Latitude),
-                        lng: parseFloat(marker.Longitude),
-                      }}
-                      icon={{
-                        path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-                        fillColor: "blue",
-                        fillOpacity: 0.6,
-                        strokeWeight: 0.5,
-                        rotation: 0,
-                        scale: 2,
-                      }}
-                      title={`Crossed On: ${marker.TimeDate}`}
-                    ></Marker>
-                  ))}
-                </GoogleMap>
-              </LoadScript>
-            )}
+            <MapHistory deviceId={deviceId} />
           </div>
         </div>
         {/* THIS IS :IVE TRACKIGGG */}
         <div className="bottom">
           <h1 className="title">Live Tracking</h1>
           <div className="map">
-            <LiveTracking clientID={clientID}></LiveTracking>
+            {/* <LiveTracking clientID={clientID}></LiveTracking> */}
           </div>
         </div>
       </div>
