@@ -80,7 +80,7 @@ const Single = () => {
   };
 
   //API call for location history info
-  // console.log(deviceId);
+  console.log(deviceId);
   const [addBluePath, setaddBluePath] = useState([]);
   const [LoadingBluePath, setLoadingBluePath] = useState(false);
   const componentMounted = useRef(true); // (3) component is mounted
@@ -89,11 +89,11 @@ const Single = () => {
     async function getBluePath() {
       try {
         setLoadingBluePath(true);
-        const BluePath = await axios.get(
+        const response = await axios.get(
           `https://ehkwpzkqme.execute-api.ap-south-1.amazonaws.com/prod/trackhistory?deviceSerialNumber=${deviceId}`
         );
 
-        setaddBluePath(BluePath.data.path);
+        setaddBluePath(response.data.path);
         //data.path is necessary
         setLoadingBluePath(false);
       } catch (error) {
@@ -180,7 +180,7 @@ const Single = () => {
                 <GoogleMap
                   id="marker-example"
                   mapContainerStyle={mapContainerStyle}
-                  zoom={15}
+                  zoom={5}
                   center={center}
                 >
                   {addBluePath.map((marker, i) => (
