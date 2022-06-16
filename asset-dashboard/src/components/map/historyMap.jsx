@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
 import CircularProgress from "@mui/material/CircularProgress";
+import { SerialNumberD } from "../../pages/single/Single";
 import { Box } from "@material-ui/core";
 import axios from "axios";
 
@@ -14,10 +15,12 @@ const mapContainerStyle = {
   height: "400px",
 };
 
-const MapHistory = (props) => {
-  const deviceId = props.deviceId;
+const MapHistory = () => {
+  const deviceserialNum = useContext(SerialNumberD);
+  // const deviceserialNum = props.deviceId;
+  // const deviceId = "randomgps01";
 
-  console.log(deviceId);
+  console.log(deviceserialNum);
 
   //API call for location history info
   const [addBluePath, setaddBluePath] = useState([]);
@@ -25,12 +28,12 @@ const MapHistory = (props) => {
 
   useEffect(() => {
     getBluePath();
-  }, [LoadingBluePath]);
+  }, [deviceserialNum]);
 
-  const getBluePath = async (deviceId) => {
+  const getBluePath = async () => {
     try {
       const response = await axios.get(
-        `https://ehkwpzkqme.execute-api.ap-south-1.amazonaws.com/prod/trackhistory?deviceSerialNumber=${deviceId}`
+        `https://ehkwpzkqme.execute-api.ap-south-1.amazonaws.com/prod/trackhistory?deviceSerialNumber=${deviceserialNum}`
       );
       const aRes = await response.data.path;
       setaddBluePath(aRes);
@@ -42,18 +45,21 @@ const MapHistory = (props) => {
     }
   };
 
-  return LoadingBluePath ? (
-    <div className="loader">
-      <Box sx={{ display: "flex" }}>
-        <CircularProgress color="secondary" />
-      </Box>
-    </div>
-  ) : (
+  // console.log(addBluePath);
+
+  // const center1 = {
+  //   lat: parseFloat(addBluePath[0].Latitude),
+  //   lng: parseFloat(addBluePath[0].Longitude),
+  // };
+
+  // console.log(center1);
+
+  return (
     <LoadScript googleMapsApiKey="AIzaSyCqnsYyCrtslXT09ZGHvzQPu6f2biBEFR4">
       <GoogleMap
         id="marker-example"
         mapContainerStyle={mapContainerStyle}
-        zoom={5}
+        zoom={8}
         center={center}
       >
         {addBluePath.map((marker, i) => (
@@ -75,9 +81,32 @@ const MapHistory = (props) => {
             title={`Crossed On: ${marker.TimeDate}`}
           ></Marker>
         ))}
+
+        {/* <Polyline
+          geodesic="true"
+          strokeColor="#0000D1"
+          icons={[
+            {
+              icon: lineSymbol,
+              offset: "0",
+              repeat: "1px",
+            },
+          ]}
+          strokeOpacity="1.0"
+          strokeWeight="2"
+          path={addBluePath}
+        ></Polyline> */}
       </GoogleMap>
     </LoadScript>
   );
 };
 
 export default MapHistory;
+
+// LoadingBluePath ? (
+//   <div className="loader">
+//     <Box sx={{ display: "flex" }}>
+//       <CircularProgress color="secondary" />
+//     </Box>
+//   </div>
+// ) :

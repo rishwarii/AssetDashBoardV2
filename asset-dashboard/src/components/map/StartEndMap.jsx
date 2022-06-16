@@ -37,7 +37,7 @@ const StartEndMap = (props, positionStart, positionEnd) => {
       >
         <Marker label="Start Position" position={props.positionStart}></Marker>
         <Marker label="End Position" position={props.positionEnd}></Marker>
-        <Polyline
+        {/* <Polyline
           geodesic="true"
           strokeColor="#0000D1"
           icons={[
@@ -50,7 +50,7 @@ const StartEndMap = (props, positionStart, positionEnd) => {
           strokeOpacity="1.0"
           strokeWeight="2"
           path={[props.positionStart, props.positionEnd]}
-        ></Polyline>
+        ></Polyline> */}
       </GoogleMap>
     </LoadScript>
   );

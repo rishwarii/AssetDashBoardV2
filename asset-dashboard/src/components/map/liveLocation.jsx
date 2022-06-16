@@ -2,18 +2,13 @@ import React, { useDebugValue } from "react";
 import axios from "axios";
 import { useRef, useState, useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
+import { SerialNumberD } from "../../pages/single/Single";
+
 import { Box } from "@material-ui/core";
 
 import { useParams } from "react-router-dom";
 
-import {
-  GoogleMap,
-  InfoWindow,
-  Polyline,
-  useLoadScript,
-  Marker,
-  LoadScript,
-} from "@react-google-maps/api";
+import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
 
 const mapContainerStyle = {
   width: "1000px",

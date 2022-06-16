@@ -4,8 +4,6 @@ import MiniDrawer from "../../components/sidebar/sidebar2coll2";
 import { useParams } from "react-router-dom";
 
 const Home = () => {
-  const { clientID } = useParams();
-
   return (
     <div className="home">
       <MiniDrawer />
@@ -14,7 +12,7 @@ const Home = () => {
         <div className="listContainer">
           <div>
             <div className="listTitle">All Asset Location</div>
-            <MapsComponentDash clientID={clientID}></MapsComponentDash>
+            <MapsComponentDash></MapsComponentDash>
           </div>
         </div>
       </div>

@@ -1,11 +1,14 @@
 import React from "react";
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
-import { Marker } from "@react-google-maps/api";
+// import { Marker } from "@react-google-maps/api";
 import "../../pages/single/Single";
 import LocationMarker from "../locationMarker/locationMarker";
 import "./map.scss";
 import CircularColor from "../loading-spinner/LoadingSpinner";
 import axios from "axios";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+
 import { useState, useEffect, useRef, useParams } from "react";
 
 const mapContainerStyle = {

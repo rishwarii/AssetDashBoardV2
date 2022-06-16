@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, createContext } from "react";
 import "./single.scss";
 
 import React from "react";
@@ -13,6 +13,9 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 import { LiveTracking, LiveView } from "../../components/map/liveLocation";
+
+export const SerialNumberD = createContext();
+
 const Single = () => {
   const API_KEY_GMAPS = process.env.NEXT_GMAPS_APP_API_KEY;
 
@@ -29,11 +32,10 @@ const Single = () => {
 
   const [SingleAsset, setSingleAsset] = useState([]);
   const [isLoading, setLoading] = useState(false);
-  const [deviceId, setdeviceId] = useState(null);
 
   //API call for single asset info fetch
   useEffect(() => {
-    async function getSingleAsset() {
+    const getSingleAsset = async () => {
       try {
         setLoading(true);
         const response = await axios.get(
@@ -41,18 +43,18 @@ const Single = () => {
         );
         setSingleAsset(response.data[0]);
         // console.log(SingleAsset.AssetID);
-        setdeviceId(SingleAsset.DeviceSerialNumber);
       } catch (error) {
         console.log("ERROR");
       }
-    }
+    };
     getSingleAsset();
 
     setLoading(false);
   }, []);
 
-  // console.log(deviceId);
+  const deviceId = SingleAsset.DeviceSerialNumber;
 
+  console.log(deviceId);
   const latitudeStart = parseFloat(SingleAsset.StartLatitude, 10);
   const longitudeStart = parseFloat(SingleAsset.StartLongitude, 10);
 
@@ -127,15 +129,19 @@ const Single = () => {
           {/* //TODO: extract to component */}
           <h1 className="title">Location History</h1>
           <div className="map">
-            <MapHistory deviceId={deviceId} />
+            <SerialNumberD.Provider value={deviceId}>
+              <MapHistory />
+            </SerialNumberD.Provider>
           </div>
         </div>
-        {/* THIS IS :IVE TRACKIGGG */}
+        {/* THIS IS LiIVE TRACKIGGG */}
         <div className="bottom">
           <h1 className="title">Live Tracking</h1>
-          <div className="map">
-            {/* <LiveTracking clientID={clientID}></LiveTracking> */}
-          </div>
+          {/* <div className="map">
+            <SerialNumberD.Provider value={deviceId}>
+              <LiveTracking />
+            </SerialNumberD.Provider>
+          </div> */}
         </div>
       </div>
     </div>

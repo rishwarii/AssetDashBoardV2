@@ -28,12 +28,6 @@ const ClientList = () => {
     getData();
   }, []);
 
-  //   const [updateClient, setupdateClient] = useState([]);
-
-  //   useEffect(() => {
-  //         setupdateClient(clientData);
-  //   } , [])
-
   return !Loading ? (
     <Box sx={{ flexGrow: 1 }}>
       <h2>Client List : </h2>
