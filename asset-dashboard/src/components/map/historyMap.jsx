@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useState, useEffect, useContext } from "react";
 import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import { SerialNumberD } from "../../pages/single/Single";
 import { Box } from "@material-ui/core";
 import axios from "axios";
-
-const center = {
-  lat: 27.1753738514716,
-  lng: 78.04209928206996,
-};
+import { MapContainer, TileLayer, useMap, Popup } from "react-leaflet";
 
 const mapContainerStyle = {
   width: "1000px",
   height: "400px",
+};
+
+const center = {
+  lat: 27.1753738514716,
+  lng: 78.04209928206996,
 };
 
 const MapHistory = () => {
