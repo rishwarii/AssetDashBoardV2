@@ -1,14 +1,20 @@
 import { Container } from "@material-ui/core";
 import { Grid } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, createContext } from "react";
 import NoteCard from "./noteCard";
 import axios from "axios";
 import { Typography, Box, Button } from "@material-ui/core";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const ClientList = () => {
+export const ClientNoteCard = createContext({});
+
+const ClientList = (props) => {
   const [clientD, setclientD] = useState([{}]);
   const [Loading, setLoading] = useState(false);
+
+  const handleData = (clientID) => {
+    console.log(clientID);
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -39,7 +45,9 @@ const ClientList = () => {
       >
         {clientD.map((note) => (
           <Grid key={note.ClientID} item xs={2} sm={4} md={4}>
-            <NoteCard note={note} />
+            <ClientNoteCard.Provider value={note}>
+              <NoteCard handleClick={handleData} />
+            </ClientNoteCard.Provider>
           </Grid>
         ))}
       </Grid>

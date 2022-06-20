@@ -1,15 +1,12 @@
 import React from "react";
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
-// import { Marker } from "@react-google-maps/api";
+import { Marker } from "@react-google-maps/api";
 import "../../pages/single/Single";
 import LocationMarker from "../locationMarker/locationMarker";
 import "./map.scss";
 import CircularColor from "../loading-spinner/LoadingSpinner";
 import axios from "axios";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-
-import { useState, useEffect, useRef, useParams } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const mapContainerStyle = {
   width: "500px",
@@ -26,17 +23,15 @@ const center = {
 const MapsComponentDash = (props) => {
   const [AllAsset, setAllAsset] = useState([]);
   const [Loading, setLoading] = useState(false);
-  // const componentMounted = useRef(true); // (3) component is mounted
 
-  const API_KEY_GMAPS = process.env.NEXT_GMAPS_APP_API_KEY;
+  // const componentMounted = useRef(true); // (3) component is mounted
 
   useEffect(() => {
     async function getAllAssets() {
       try {
         setLoading(true);
         const response = await axios.get(
-          // `https://x6fxeu21qb.execute-api.ap-south-1.amazonaws.com/test/clientassets?ClientID=${props.clientID}`
-          "https://x6fxeu21qb.execute-api.ap-south-1.amazonaws.com/test/clientassets?ClientID=1"
+          " https://ehkwpzkqme.execute-api.ap-south-1.amazonaws.com/prod/allassets"
         );
 
         const AllAsset = await response.data;
@@ -60,7 +55,7 @@ const MapsComponentDash = (props) => {
     //   <CircularColor color="secondary" />
     // ) : (
     <div className="mapDash">
-      <LoadScript googleMapsApiKey={API_KEY_GMAPS}>
+      <LoadScript googleMapsApiKey="AIzaSyCqnsYyCrtslXT09ZGHvzQPu6f2biBEFR4">
         <GoogleMap
           id="marker-example"
           mapContainerStyle={mapContainerStyle}

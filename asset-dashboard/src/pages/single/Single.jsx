@@ -54,7 +54,7 @@ const Single = () => {
 
   const deviceId = SingleAsset.DeviceSerialNumber;
 
-  console.log(deviceId);
+  // console.log(deviceId);
   const latitudeStart = parseFloat(SingleAsset.StartLatitude, 10);
   const longitudeStart = parseFloat(SingleAsset.StartLongitude, 10);
 
@@ -137,11 +137,11 @@ const Single = () => {
         {/* THIS IS LiIVE TRACKIGGG */}
         <div className="bottom">
           <h1 className="title">Live Tracking</h1>
-          {/* <div className="map">
+          <div id="map" className="map">
             <SerialNumberD.Provider value={deviceId}>
               <LiveTracking />
             </SerialNumberD.Provider>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

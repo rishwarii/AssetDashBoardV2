@@ -37,6 +37,10 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const LandingPage = () => {
+  const handleData = (clientID) => {
+    console.log(clientID);
+  };
+
   const classes = useStyle();
   return (
     <div className={classes.main}>
@@ -52,7 +56,7 @@ const LandingPage = () => {
       {/* <h2 className={classes.clientList} sx={{}}>
         List of Clients :
       </h2> */}
-      <ClientList></ClientList>
+      <ClientList handleClick={handleData}></ClientList>
     </div>
   );
 };
