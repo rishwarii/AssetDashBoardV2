@@ -7,6 +7,9 @@ import "./map.scss";
 import CircularColor from "../loading-spinner/LoadingSpinner";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../state/index";
 
 const mapContainerStyle = {
   width: "500px",
@@ -24,14 +27,19 @@ const MapsComponentDash = (props) => {
   const [AllAsset, setAllAsset] = useState([]);
   const [Loading, setLoading] = useState(false);
 
-  // const componentMounted = useRef(true); // (3) component is mounted
+  const clientIDRoute = useSelector((state) => state.client);
+  const dispatch = useState();
+
+  const { fetchClientId } = bindActionCreators(actionCreators, dispatch);
+
+  console.log(AC);
 
   useEffect(() => {
     async function getAllAssets() {
       try {
         setLoading(true);
         const response = await axios.get(
-          " https://ehkwpzkqme.execute-api.ap-south-1.amazonaws.com/prod/allassets"
+          "https://ehkwpzkqme.execute-api.ap-south-1.amazonaws.com/prod/allassets"
         );
 
         const AllAsset = await response.data;
@@ -72,6 +80,7 @@ const MapsComponentDash = (props) => {
               }}
             ></Marker>
           ))}
+          {/* <Marker position={center}></Marker> */}
         </GoogleMap>
       </LoadScript>
     </div>
