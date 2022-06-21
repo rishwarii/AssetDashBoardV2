@@ -21,14 +21,14 @@ import {
 
 const NewAsset = () => {
   const [newAsset, setnewAsset] = useState({
-    assetName: "",
-    assetSerialNumber: "",
-    assetType: "",
-    deviceSerialNumber: "",
-    endLocationLatitude: "",
-    endLocationLongitude: "",
-    startLocationLatitude: "",
-    startLocationLongitude: "",
+    AssetName: "",
+    AssetSerialNumber: "",
+    AssetType: "",
+    DeviceSerialNumber: "",
+    EndLocationLatitude: "",
+    EndLocationLongitude: "",
+    StartLocationLatitude: "",
+    StartLocationLongitude: "",
   });
 
   const [status, setStatus] = useState();
@@ -46,7 +46,7 @@ const NewAsset = () => {
     e.preventDefault();
     try {
       await axios.post(
-        `https://4n53lh55nc.execute-api.ap-south-1.amazonaws.com/prod/asset`,
+        "https://x6fxeu21qb.execute-api.ap-south-1.amazonaws.com/test/clientassets",
         newAsset
       );
       setStatus(true);
@@ -194,23 +194,6 @@ const NewAsset = () => {
               </Grid>
             </Grid>
           </div>
-          <Grid item xs={6}>
-            <div className="formInput">
-              {/* <KeyboardDateTimePicker
-                // renderInput={() => <TextField/>}
-                name="expectedDeliveryDateTime"
-                required
-                value={newAsset}
-                fullWidth
-                type="datetime-local"
-                defaultValue="2017-05-24T10:30"
-                sx={{ width: 250 }}
-                id="expectedDeliveryDateTime"
-                label=" expectedDeliveryDateTime"
-                onChange={(e) => onTextFieldChange(e)}   
-              /> */}
-            </div>
-          </Grid>
           <Box m={3}>
             <Button
               width="150px"

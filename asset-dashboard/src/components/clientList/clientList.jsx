@@ -12,9 +12,20 @@ const ClientList = (props) => {
   const [clientD, setclientD] = useState([{}]);
   const [Loading, setLoading] = useState(false);
 
+  const [clientDsend, setclientDsend] = useState([{}]);
+
   const handleData = (clientID) => {
-    console.log(clientID);
+    // console.log(clientID);
+    setclientDsend(clientID);
+    props.getClientID(clientDsend);
   };
+
+  console.log(clientDsend);
+
+  // const getDataa = (e) => {
+  //   e.preventDefault();
+  //   setclientDsend(clientD);
+  // };
 
   useEffect(() => {
     const getData = async () => {
@@ -23,7 +34,14 @@ const ClientList = (props) => {
         const response = await axios.get(
           "https://x6fxeu21qb.execute-api.ap-south-1.amazonaws.com/test/allclients"
         );
-
+        // const response = await axios.get(
+        //   "https://jsonplaceholder.typicode.com/todos",
+        //   {
+        //     params: {
+        //       _limit: 4,
+        //     },
+        //   }
+        // );
         setclientD(response.data);
         setLoading(false);
         console.log(clientD);

@@ -3,8 +3,7 @@ import React, { useState } from "react";
 
 import MapsComponentDash from "../../components/map/dasboardMap";
 import MiniDrawer from "../../components/sidebar/sidebar2coll2";
-import { useParams } from "react-router-dom";
-import NoteCard from "../../components/clientList/noteCard";
+
 
 const Home = () => {
   return (

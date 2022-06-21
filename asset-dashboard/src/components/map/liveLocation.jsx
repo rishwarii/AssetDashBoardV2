@@ -3,11 +3,9 @@ import axios from "axios";
 import { useRef, useState, useEffect, useContext } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { SerialNumberD } from "../../pages/single/Single";
-
 import { Box } from "@material-ui/core";
-
-import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
-
+import { Map, TileLayer, Marker, Popup, MapContainer } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 // import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
 
 const mapContainerStyle = {
@@ -16,11 +14,12 @@ const mapContainerStyle = {
 };
 
 const center = {
-  lat: 20,
-  lng: 88,
+  lat: 26,
+  lng: 75,
 };
 
-export const LiveTracking = (props) => {
+export const LiveTracking = () => {
+  const mapRef = useRef();
   const [isLoading, setisLoading] = useState(true);
   const [liveLoc, setliveLoc] = useState([
     {
@@ -37,8 +36,21 @@ export const LiveTracking = (props) => {
     setliveLoc((liveLoc) => ({ ...liveLoc, ...data }));
 
   useEffect(() => {
+    const { current = {} } = mapRef;
+    const { leafletElement: map } = current;
+
+    setTimeout(() => {
+      map.flyTo(center, 14, {
+        duration: 5,
+      });
+    }, 1000);
     getLiveLocation();
-  }, []);
+  }, [mapRef]);
+
+  const latp = 26;
+  const lngp = 75;
+
+  console.log(mapRef);
 
   const getLiveLocation = async function getLiveLocation() {
     try {
@@ -55,15 +67,17 @@ export const LiveTracking = (props) => {
           lng: parseFloat(LiveLocation.Longitude),
         },
 
+        map: null,
+
         // curLoc: {
-        //   lat: 44,
-        //   lng: 34,
+        //   lat: latp,
+        //   lng: lngp,
         // },
       });
 
       setisLoading(false);
     } catch (error) {
-      console.log("ERROR IN Liive LOCcation");
+      console.log("ERROR IN Live LOCcation");
     }
   };
 
@@ -85,10 +99,19 @@ export const LiveTracking = (props) => {
     </div>
   ) : (
     <MapContainer
+      ref={mapRef}
       style={mapContainerStyle}
-      center={curLoc}
+      center={center}
       zoom={13}
       scrollWheelZoom={false}
+      icon={{
+        path: "M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z",
+        fillColor: "#333300",
+        fillOpacity: 0.6,
+        rotation: 0,
+        scale: 2,
+      }}
+      whenCreated={(map) => this.setState({ map })}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

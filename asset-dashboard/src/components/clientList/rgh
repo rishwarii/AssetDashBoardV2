@@ -1,0 +1,31 @@
+<!-- // return (
+  //   <Card sx={{ bgColor: "#375f5f" }}>
+  //     {/* <CardActionArea component={RouterLink} to="/home"> */}
+  //     {/* <CardActionArea> */}
+  //     <CardHeader title="Client's Details" />
+  //     <CardContent>
+  //       <Typography color="inherit" gutterBottom variant="h6" component="div">
+  //         Client Name : <span>{note.ClientName}</span>
+  //       </Typography>
+  //       <Typography variant="body2">
+  //         Client ID : <span>{note.ClientID}</span>
+  //       </Typography>
+  //     </CardContent>
+  //     {/* <CardActions> */}
+  //     <Typography>
+  //       {" "}
+  //       <Button
+  //         component={Link}
+  //         to="/home"
+  //         value={note.ClientID}
+  //         onClick={handleClick}
+  //         color="secondary"
+  //         size="small"
+  //       >
+  //         Go to Client Dashboard
+  //       </Button>{" "}
+  //     </Typography>
+  //     {/* </CardActions> */}
+  //     {/* </CardActionArea> */}
+  //   </Card>
+  // ); -->

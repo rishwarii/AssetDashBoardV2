@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
 import ButtonAppBar from "../../components/appBar/ButtonAppBar";
+import { useNavigate } from "react-router-dom";
+
 import ClientList from "../../components/clientList/clientList";
 
 const useStyle = makeStyles((theme) => ({
@@ -37,8 +39,11 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const LandingPage = () => {
-  const handleData = (clientID) => {
+  const navigate = useNavigate();
+
+  const getDataa = (clientID) => {
     console.log(clientID);
+    navigate("/home");
   };
 
   const classes = useStyle();
@@ -56,7 +61,7 @@ const LandingPage = () => {
       {/* <h2 className={classes.clientList} sx={{}}>
         List of Clients :
       </h2> */}
-      <ClientList handleClick={handleData}></ClientList>
+      <ClientList getClientID={getDataa}></ClientList>
     </div>
   );
 };
