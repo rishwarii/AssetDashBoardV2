@@ -6,6 +6,7 @@ import { SerialNumberD } from "../../pages/single/Single";
 import { Box } from "@material-ui/core";
 import { Map, TileLayer, Marker, Popup, MapContainer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import L, { Point, DivIcon } from "leaflet";
 // import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
 
 const mapContainerStyle = {
@@ -18,8 +19,15 @@ const center = {
   lng: 75,
 };
 
+const markerIcon = new L.Icon({
+  iconUrl: require("../../imgAsset/icons8-delivery-truck-48.png"),
+  iconSize: [40, 40],
+  iconAnchor: [17, 46], //[left/right, top/bottom]
+  popupAnchor: [0, -46], //[left/right, top/bottom]
+});
+
 export const LiveTracking = () => {
-  const mapRef = useRef();
+  const mapRef = useRef(1);
   const [isLoading, setisLoading] = useState(true);
   const [liveLoc, setliveLoc] = useState([
     {
@@ -29,6 +37,10 @@ export const LiveTracking = () => {
       },
     },
   ]);
+
+  // const [center, setCenter] = useState({ lat:  50, lng:  50 });
+
+  const maprender = useRef(0);
   const deviceserialNum = useContext(SerialNumberD);
   console.log(deviceserialNum);
   const { curLoc } = liveLoc;
@@ -36,21 +48,9 @@ export const LiveTracking = () => {
     setliveLoc((liveLoc) => ({ ...liveLoc, ...data }));
 
   useEffect(() => {
-    const { current = {} } = mapRef;
-    const { leafletElement: map } = current;
-
-    setTimeout(() => {
-      map.flyTo(center, 14, {
-        duration: 5,
-      });
-    }, 1000);
+    setTimeout(() => {}, 1000);
     getLiveLocation();
-  }, [mapRef]);
-
-  const latp = 26;
-  const lngp = 75;
-
-  console.log(mapRef);
+  }, []);
 
   const getLiveLocation = async function getLiveLocation() {
     try {
@@ -68,11 +68,6 @@ export const LiveTracking = () => {
         },
 
         map: null,
-
-        // curLoc: {
-        //   lat: latp,
-        //   lng: lngp,
-        // },
       });
 
       setisLoading(false);
@@ -84,7 +79,7 @@ export const LiveTracking = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       getLiveLocation();
-    }, 100000);
+    }, 10000);
 
     return () => clearInterval(interval);
   }, []);
@@ -99,19 +94,10 @@ export const LiveTracking = () => {
     </div>
   ) : (
     <MapContainer
-      ref={mapRef}
       style={mapContainerStyle}
       center={center}
       zoom={13}
       scrollWheelZoom={false}
-      icon={{
-        path: "M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z",
-        fillColor: "#333300",
-        fillOpacity: 0.6,
-        rotation: 0,
-        scale: 2,
-      }}
-      whenCreated={(map) => this.setState({ map })}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

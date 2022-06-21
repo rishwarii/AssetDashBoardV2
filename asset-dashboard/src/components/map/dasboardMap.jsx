@@ -32,8 +32,6 @@ const MapsComponentDash = (props) => {
 
   const { fetchClientId } = bindActionCreators(actionCreators, dispatch);
 
-  console.log(AC);
-
   useEffect(() => {
     async function getAllAssets() {
       try {

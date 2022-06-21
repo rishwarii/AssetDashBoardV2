@@ -5,6 +5,7 @@ import ButtonAppBar from "../../components/appBar/ButtonAppBar";
 import { useNavigate } from "react-router-dom";
 
 import ClientList from "../../components/clientList/clientList";
+import { useTheme } from "@emotion/react";
 
 const useStyle = makeStyles((theme) => ({
   landingPage: {
@@ -40,9 +41,10 @@ const useStyle = makeStyles((theme) => ({
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const [clientDD, setclientDD] = useState();
 
   const getDataa = (clientID) => {
-    console.log(clientID);
+    setclientDD(clientID);
     navigate("/home");
   };
 

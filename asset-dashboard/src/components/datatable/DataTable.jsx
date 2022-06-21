@@ -9,10 +9,15 @@ import { Link } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
+import { useSelector } from "react-redux";
 
 const DataTable = () => {
   const [Assets, setAssets] = useState([]);
   const [isLoading, setisLoading] = useState(false);
+
+  const clientIDRoute = useSelector((state) => state.client);
+
+  console.log(clientIDRoute);
 
   const columns = [
     { field: "AssetID", headerName: "AssetID ", width: 100 },

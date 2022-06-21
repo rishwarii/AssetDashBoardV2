@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
-import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
+// import { GoogleMap, Marker, LoadScript } from "@react-google-maps/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import { SerialNumberD } from "../../pages/single/Single";
 import { Box } from "@material-ui/core";
 import axios from "axios";
-import { MapContainer, TileLayer, useMap, Popup } from "react-leaflet";
+// import { MapContainer, TileLayer, useMap, Popup } from "react-leaflet";
+import { Map, TileLayer, Marker, Popup, MapContainer } from "react-leaflet";
+import L, { Point, DivIcon } from "leaflet";
+import mapMarkerHis from "../../imgAsset/icons8-location-40.png";
+
+import "leaflet/dist/leaflet.css";
 
 const mapContainerStyle = {
   width: "1000px",
@@ -12,9 +17,16 @@ const mapContainerStyle = {
 };
 
 const center = {
-  lat: 27.1753738514716,
-  lng: 78.04209928206996,
+  lat: 26.898,
+  lng: 75.81734,
 };
+
+const markerIcon = new L.Icon({
+  iconUrl: require("../../imgAsset/icons8-location-40.png"),
+  iconSize: [40, 40],
+  iconAnchor: [17, 46], //[left/right, top/bottom]
+  popupAnchor: [0, -46], //[left/right, top/bottom]
+});
 
 const MapHistory = () => {
   const deviceserialNum = useContext(SerialNumberD);
@@ -46,59 +58,35 @@ const MapHistory = () => {
     }
   };
 
-  // console.log(addBluePath);
-
-  // const center1 = {
-  //   lat: parseFloat(addBluePath[0].Latitude),
-  //   lng: parseFloat(addBluePath[0].Longitude),
-  // };
-
-  // console.log(center1);
+  console.log(addBluePath);
 
   return (
-    <LoadScript googleMapsApiKey="AIzaSyCqnsYyCrtslXT09ZGHvzQPu6f2biBEFR4">
-      <GoogleMap
-        id="marker-example"
-        mapContainerStyle={mapContainerStyle}
-        zoom={8}
-        center={center}
-      >
-        {addBluePath.map((marker, i) => (
-          <Marker
-            key={i}
-            position={{
-              lat: parseFloat(marker.Latitude),
-              lng: parseFloat(marker.Longitude),
-            }}
-            icon={{
-              path:
-                "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
-              fillColor: "blue",
-              fillOpacity: 0.6,
-              strokeWeight: 0.5,
-              rotation: 0,
-              scale: 2,
-            }}
-            title={`Crossed On: ${marker.TimeDate}`}
-          ></Marker>
-        ))}
+    <MapContainer
+      style={mapContainerStyle}
+      center={center}
+      zoom={13}
+      scrollWheelZoom={false}
+    >
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      />
 
-        {/* <Polyline
-          geodesic="true"
-          strokeColor="#0000D1"
-          icons={[
-            {
-              icon: lineSymbol,
-              offset: "0",
-              repeat: "1px",
-            },
-          ]}
-          strokeOpacity="1.0"
-          strokeWeight="2"
-          path={addBluePath}
-        ></Polyline> */}
-      </GoogleMap>
-    </LoadScript>
+      {addBluePath.map((marker, i) => (
+        <Marker
+          key={i}
+          position={{
+            lat: parseFloat(marker.Latitude),
+            lng: parseFloat(marker.Longitude),
+          }}
+        >
+          {" "}
+          <Popup>`Crossed On: ${marker.TimeDate}`</Popup>
+        </Marker>
+      ))}
+
+      <Marker position={center} icon={markerIcon}></Marker>
+    </MapContainer>
   );
 };
 
