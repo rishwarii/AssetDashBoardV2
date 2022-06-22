@@ -14,10 +14,10 @@ const mapContainerStyle = {
   height: "400px",
 };
 
-const center = {
-  lat: 26,
-  lng: 75,
-};
+// const center = {
+//   lat: 26.898,
+//   lng: 75.81734,
+// };
 
 const markerIcon = new L.Icon({
   iconUrl: require("../../imgAsset/icons8-delivery-truck-48.png"),
@@ -26,8 +26,8 @@ const markerIcon = new L.Icon({
   popupAnchor: [0, -46], //[left/right, top/bottom]
 });
 
+// const zoomControl = new L.popup().autoPanPadding()
 export const LiveTracking = () => {
-  const mapRef = useRef(1);
   const [isLoading, setisLoading] = useState(true);
   const [liveLoc, setliveLoc] = useState([
     {
@@ -38,9 +38,8 @@ export const LiveTracking = () => {
     },
   ]);
 
-  // const [center, setCenter] = useState({ lat:  50, lng:  50 });
+  const [center, setCenter] = useState({ lat: 26.898, lng: 75.81734 });
 
-  const maprender = useRef(0);
   const deviceserialNum = useContext(SerialNumberD);
   console.log(deviceserialNum);
   const { curLoc } = liveLoc;
@@ -69,8 +68,8 @@ export const LiveTracking = () => {
 
         map: null,
       });
-
       setisLoading(false);
+      setCenter(curLoc);
     } catch (error) {
       console.log("ERROR IN Live LOCcation");
     }
@@ -79,7 +78,7 @@ export const LiveTracking = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       getLiveLocation();
-    }, 10000);
+    }, 500);
 
     return () => clearInterval(interval);
   }, []);
@@ -96,14 +95,14 @@ export const LiveTracking = () => {
     <MapContainer
       style={mapContainerStyle}
       center={center}
-      zoom={13}
+      zoom={20}
       scrollWheelZoom={false}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      <Marker position={curLoc}>
+      <Marker position={curLoc} icon={markerIcon}>
         <Popup>Live Location</Popup>
       </Marker>
     </MapContainer>

@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect, createContext } from "react";
 import "./single.scss";
-
 import React from "react";
 import StartEndMap from "../../components/map/StartEndMap";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -15,6 +14,8 @@ import axios from "axios";
 import { LiveTracking, LiveView } from "../../components/map/liveLocation";
 
 export const SerialNumberD = createContext();
+export const PositionStart = createContext();
+export const positionEnd = createContext();
 
 const Single = () => {
   const API_KEY_GMAPS = process.env.NEXT_GMAPS_APP_API_KEY;
@@ -42,7 +43,7 @@ const Single = () => {
           `https://x6fxeu21qb.execute-api.ap-south-1.amazonaws.com/test/clientasset?AssetID=${AssetID}`
         );
         setSingleAsset(response.data[0]);
-        // console.log(SingleAsset.AssetID);
+        console.log(SingleAsset.AssetID);
       } catch (error) {
         console.log("ERROR");
       }
@@ -54,7 +55,7 @@ const Single = () => {
 
   const deviceId = SingleAsset.DeviceSerialNumber;
 
-  // console.log(deviceId);
+  console.log(deviceId);
   const latitudeStart = parseFloat(SingleAsset.StartLatitude, 10);
   const longitudeStart = parseFloat(SingleAsset.StartLongitude, 10);
 
@@ -115,10 +116,12 @@ const Single = () => {
           <div className="right">
             <h1 className="title">Start and End Location</h1>
             {/* <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" /> */}
+            {/* <PositionStart.Provider>  */}
             <StartEndMap
               positionStart={positionStart}
               positionEnd={positionEnd}
             ></StartEndMap>
+            {/* </PositionStart.Provider> */}
           </div>
         </div>
 

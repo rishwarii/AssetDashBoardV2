@@ -79,6 +79,7 @@ const MapHistory = () => {
             lat: parseFloat(marker.Latitude),
             lng: parseFloat(marker.Longitude),
           }}
+          icon={markerIcon}
         >
           {" "}
           <Popup>`Crossed On: ${marker.TimeDate}`</Popup>

@@ -1,5 +1,4 @@
 import "./datatable.scss";
-import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import axios from "axios";
@@ -9,15 +8,20 @@ import { Link } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
-import { useSelector } from "react-redux";
+import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../state/index";
 
 const DataTable = () => {
   const [Assets, setAssets] = useState([]);
   const [isLoading, setisLoading] = useState(false);
 
   const clientIDRoute = useSelector((state) => state.client);
+  const dispatch = useState();
+  const { fetchClientId } = bindActionCreators(actionCreators, dispatch);
 
-  console.log(clientIDRoute);
+  console.log(fetchClientId);
 
   const columns = [
     { field: "AssetID", headerName: "AssetID ", width: 100 },

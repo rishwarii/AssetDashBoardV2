@@ -54,7 +54,7 @@ const MapsComponentDash = (props) => {
       }
     }
     getAllAssets();
-  }, [setAllAsset]);
+  }, []);
 
   //TODO: add spiiner for loading
   return (

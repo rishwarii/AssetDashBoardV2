@@ -13,12 +13,17 @@ import { useTheme } from "@emotion/react";
 import { CardHeader } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 import { BrowserRouter as Router, Link } from "react-router-dom";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../state/index";
 
 const NoteCard = (props) => {
   const note = useContext(ClientNoteCard);
 
   // const [clientID, setclientID] = useState(note.ClientID);
   const [clientID, setclientID] = useState(note.id);
+  const dispatch = useState();
+
+  const { fetchClientId } = bindActionCreators(actionCreators, dispatch);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -41,6 +46,7 @@ const NoteCard = (props) => {
           <Button
             value={note.ClientID}
             onClick={handleClick}
+            // onClick={}
             // color="secondary"
             // size="small"
           >
